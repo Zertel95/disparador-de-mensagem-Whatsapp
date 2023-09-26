@@ -1,7 +1,7 @@
 
-//########################## Cássio Machado	 ##########################################
-//########################## Atualizado em 21/09/2023 ######################################
-//Versão do WhatsApp 2.2340.7
+//########################## Suebersson Montalvão ##########################################
+//########################## Atualizado em 16/06/2023 ######################################
+//Versão do WhatsApp 2.2325.3
 
 //Referências
 //https://gist.github.com/phpRajat/a6422922efae32914f4dbd1082f3f412
@@ -295,8 +295,7 @@ async function openChatIfThereIs(id) {
 			return {isChat: true, obj: _chat};
 		}else{
 
-			//verificar se o número do chat está salvo na lista de contatos e iniciar uma conversa
-			if(_contact !== undefined){// && _contact.__x_isMyContact){
+			if(_contact !== undefined && _contact.__x_isMyContact){//verificar se o número do chat está salvo na lista de contatos e iniciar uma conversa
 		
 				return getChatAfterAddingList(id);
 		
@@ -308,7 +307,7 @@ async function openChatIfThereIs(id) {
 					
 				_contact = Store.Contact.get(_newId);
 				
-				if(_contact !== undefined){// && _contact.__x_isMyContact){
+				if(_contact !== undefined && _contact.__x_isMyContact){
 					return getChatAfterAddingList(_newId);
 				}else{
 					
@@ -432,21 +431,16 @@ function isChatOnline(chatId){
 //verificar se o número de whatsapp existe
 //console.log(await isWhatsAppExist('5521985522525@c.us'))
 async function isWhatsAppExist(chatId){
-	return await Store.WapQuery.queryPhoneExists(chatId).then((result) => {
-		console.log(result);
-		//return result.status == 200
-		return result !== null 
-			? {isChat: true, id: result.wid._serialized} 
-			: {isChat: false, id: undefined};
+	return await Store.WapQuery.queryExist(chatId).then((result) => {
+		return result.status == 200 ? {isChat: true, id: result.jid._serialized} : {isChat: false, id: undefined};
 	});	
 }
+
 
 //verificar se o número de whatsapp existe na versão Beta do WhatsApp
 async function isWhatsAppExistBeta(chatId){
 	//return await Store.CheckNumberBeta.queryExists(chatId).then((result) => {
 	return await Store.CheckNumberBeta.queryPhoneExists(chatId).then((result) => {
-		return result !== null 
-			? {isChat: true, id: result.wid._serialized} 
-			: {isChat: false, id: undefined};
+		return result !== null ? {isChat: true, id: result.wid._serialized} : {isChat: false, id: undefined};
 	});
 }
