@@ -1,14 +1,15 @@
 
 //########################## Suebersson Montalvão ##########################################
-//########################## Atualizado em 16/06/2023 ######################################
-//Versão do WhatsApp 2.2325.3
+//########################## Atualizado em 26/09/2023 ######################################
+//Versão do WhatsApp 2.2340.16
 
-//Referências
-//https://gist.github.com/phpRajat/a6422922efae32914f4dbd1082f3f412
-//https://raw.githubusercontent.com/smashah/sulla/master/src/lib/wapi.js
-//https://github.com/orkestral/venom/blob/master/src/lib/wapi/store/store-objects.js
+// Referências:
+// https://gist.github.com/phpRajat/a6422922efae32914f4dbd1082f3f412
+// https://raw.githubusercontent.com/smashah/sulla/master/src/lib/wapi.js
+// https://github.com/orkestral/venom/blob/master/src/lib/wapi/store/store-objects.js
+// https://github.com/wppconnect-team/WPP4Delphi/blob/main/Source/JS/js.abr
 
- 
+
 if (!window.Store) {
 	(function () {
 		function getStore(modules) {
@@ -202,8 +203,8 @@ function sendImageToId(id, imgBase64, legenda, fileName) {
 	openChatIfThereIs(id).then((c) => {
 		if(c.isChat) {
 			processFile(c.obj, base64ImageToFile(imgBase64, fileName)).then( mc => {
-				//console.log(mc);
-				//mc.models[0].sendToChat(c.obj, {caption: legenda}) // objeto 'models' foi alterado
+				//console.log(mc.length);
+				// [models] is deprecated
 				mc._models[0].sendToChat(c.obj, {caption: legenda})
 			});
 		}
@@ -213,14 +214,36 @@ function sendImageToId(id, imgBase64, legenda, fileName) {
 
 async function processFile(chat, blobs) {
 	
-	if (!Array.isArray(blobs)) blobs = [blobs];
-	
 	mc = new Store.MediaCollection(chat);
 	
+	try{
+
+		await mc.processAttachments([{file: blobs}, 1], 1, chat);
+
+		return mc;
+
+	}catch(e){
+
+		console.warn('Erro ao tentar processar e anexar a image no chat');
+
+		return mc;
+
+	}
+	
+/*
+	if (!Array.isArray(blobs)) blobs = [blobs];
+
+	mc = new Store.MediaCollection(chat);
+
+	// gerando erro
 	await mc.processAttachments(blobs.map(blob => {return{file:blob}}), chat, 1);
+	
+	// [processFiles] is deprecated
 	//await mc.processFiles(blobs.map(blob => {return{file:blob}}), chat, 1);
 
 	return mc;
+*/
+
 }
 
 function base64ImageToFile(b64Data, fileName) {
@@ -239,21 +262,15 @@ function base64ImageToFile(b64Data, fileName) {
 //########################## Auto responder ####################################
 function SelfAnswer_sendMessageToID(id, message){
 
-	Store.Chat.find(id).then((chat) => {
-		Store.SendTextMsgToChat(chat , message)
+	openChatIfThereIs(id).then((c) => {
+		if(c.isChat) Store.SendTextMsgToChat(c.obj , message);
 	});
-	
+
 }
 
 function SelfAnswer_sendImageToId(id, imgBase64, legenda, fileName) {
-
-	Store.Chat.find(id).then((chat) => {
-		
-		process_Files(chat, base64ImageToFile(imgBase64, fileName)).then(mc => {
-			mc.models[0].sendToChat(chat, {caption: legenda})
-		});
-		
-	});
+	
+	sendImageToId(id, imgBase64, legenda, fileName);
 	
 }
 
@@ -295,7 +312,8 @@ async function openChatIfThereIs(id) {
 			return {isChat: true, obj: _chat};
 		}else{
 
-			if(_contact !== undefined && _contact.__x_isMyContact){//verificar se o número do chat está salvo na lista de contatos e iniciar uma conversa
+			//verificar se o número do chat está salvo na lista de contatos e iniciar uma conversa
+			if(_contact !== undefined){// && _contact.__x_isMyContact){
 		
 				return getChatAfterAddingList(id);
 		
@@ -307,7 +325,7 @@ async function openChatIfThereIs(id) {
 					
 				_contact = Store.Contact.get(_newId);
 				
-				if(_contact !== undefined && _contact.__x_isMyContact){
+				if(_contact !== undefined){// && _contact.__x_isMyContact){
 					return getChatAfterAddingList(_newId);
 				}else{
 					
@@ -431,16 +449,21 @@ function isChatOnline(chatId){
 //verificar se o número de whatsapp existe
 //console.log(await isWhatsAppExist('5521985522525@c.us'))
 async function isWhatsAppExist(chatId){
-	return await Store.WapQuery.queryExist(chatId).then((result) => {
-		return result.status == 200 ? {isChat: true, id: result.jid._serialized} : {isChat: false, id: undefined};
+	return await Store.WapQuery.queryPhoneExists(chatId).then((result) => {
+		console.log(result);
+		//return result.status == 200
+		return result !== null 
+			? {isChat: true, id: result.wid._serialized} 
+			: {isChat: false, id: undefined};
 	});	
 }
-
 
 //verificar se o número de whatsapp existe na versão Beta do WhatsApp
 async function isWhatsAppExistBeta(chatId){
 	//return await Store.CheckNumberBeta.queryExists(chatId).then((result) => {
 	return await Store.CheckNumberBeta.queryPhoneExists(chatId).then((result) => {
-		return result !== null ? {isChat: true, id: result.wid._serialized} : {isChat: false, id: undefined};
+		return result !== null 
+			? {isChat: true, id: result.wid._serialized} 
+			: {isChat: false, id: undefined};
 	});
 }
