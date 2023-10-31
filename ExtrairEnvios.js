@@ -1,9 +1,9 @@
-//########################## Atualizado em 21/07/2023 ######################################################################
+//########################## Atualizado em 31/10/2023 ######################################################################
 //Versão do WhatsApp 2.2330.11
 
 var ListChats = new Array(), cont = 0, nome, numero, nTratado, nTratado2, sem55, Qt;
 
-function ExtrairListaContatos(){
+function ExtrairEnvios(){
 	
 	console.clear();
 
