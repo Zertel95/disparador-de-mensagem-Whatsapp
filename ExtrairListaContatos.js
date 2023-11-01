@@ -33,7 +33,7 @@ function ExtrairListaContatos(){
 					sem55 = numero.slice(2,8) + '-' + numero.slice(8,12);
 				}
 				
-				ListChats[cont] = 'Nome: ' + nome +';numero: ' ; 					
+				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero; 					
 				cont++
 				
 				Nome = ''; numero = ''; 
@@ -41,7 +41,7 @@ function ExtrairListaContatos(){
 		}
 
 		ListChats = ListChats.filter(function(este,q){return ListChats.indexOf(este) == q;})
-		console.log('Total de: ' + ListChats.length + ' Contatos')
+		console.log('Total de: ' + ListChats.length + ' Envios')
 		
 		var data = new Date(); data = data.getDate() + "." + (data.getMonth()+1) + "." + data.getFullYear();
 		printTxt(ListChats, 'Lista de Envios' + ' - ' +  data + '.csv')
