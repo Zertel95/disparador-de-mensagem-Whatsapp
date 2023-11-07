@@ -33,7 +33,7 @@ function ExtrairListaContatos(){
 					sem55 = numero.slice(2,8) + '-' + numero.slice(8,12);
 				}
 				
-				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero; 					
+				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero  + 'quantos' + Qt + 'Data' + data; 					
 				cont++
 				
 				Nome = ''; numero = ''; nTratado = ''; nTratado2 = ''; sem55 = '';
