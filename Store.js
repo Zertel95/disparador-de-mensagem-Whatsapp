@@ -193,7 +193,14 @@ if (!window.Store) {
 function sendMessageToID(id, message){
 
 	openChatIfThereIs(id).then((c) => {
-		if(c.isChat) Store.SendTextMsgToChat(c.obj , message);
+		if(c.isChat) 
+		{
+			var teste = Store.SendTextMsgToChat(c.obj , message);
+		
+			console.warn(teste);
+
+			return teste;
+		}
 	});
 	
 }
