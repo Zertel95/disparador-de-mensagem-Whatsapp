@@ -21,7 +21,7 @@ function ExtrairListaContatos(){
 				
 				numero = Store.Contact._models[q].__x_id.user;
 				nome = removerAcentos(Store.Contact._models[q].__x_name);
-				envio = isChatOnline (Store.Contact.Date);
+				envio = isWhatsAppExistBeta (Store.Contact.Date);
 				
 				
 				Qt = numero.length;				
@@ -35,10 +35,10 @@ function ExtrairListaContatos(){
 					sem55 = numero.slice(2,8) + '-' + numero.slice(8,12);
 				}
 				
-				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero + 'Envio' + envio; 					
+				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero + 'Envio' + isChat; 					
 				cont++
 				
-				Nome = ''; numero = ''; envio = '';
+				Nome = ''; numero = ''; isChat = '';
 			}
 		}
 
