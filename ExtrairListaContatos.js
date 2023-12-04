@@ -21,7 +21,7 @@ function ExtrairListaContatos(){
 				
 				numero = Store.Contact._models[q].__x_id.user;
 				nome = removerAcentos(Store.Contact._models[q].__x_name);
-				base64 = Store.console._models[q].__x_type;
+				
 				Qt = numero.length;				
 				if (Qt == 13){
 					nTratado = numero.slice(2,13)
@@ -33,7 +33,7 @@ function ExtrairListaContatos(){
 					sem55 = numero.slice(2,8) + '-' + numero.slice(8,12);
 				}
 				
-				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero + 'Status' + base64; 					
+				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero + ';' + nome + ';' + numero + ';' +  nTratado + ';'  + nTratado2 + ';' + sem55; 					
 				cont++
 				
 				Nome = ''; numero = ''; nTratado = ''; nTratado2 = ''; sem55 = '';
