@@ -44,7 +44,7 @@ function ExtrairListaContatos(){
 		console.log('Total de: ' + ListChats.length + ' Contatos')
 		
 		var data = new Date(); data = data.getDate() + "." + (data.getMonth()+1) + "." + data.getFullYear();
-		printTxt(ListChats, 'Lista de Contatos' + ' - ' +  data + '.csv')
+		printTxt(ListChats, 'Lista de Entrega' + ' - ' +  data + '.csv')
 		ListChats = new Array();
 
 	}else{
