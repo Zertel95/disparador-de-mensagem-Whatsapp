@@ -1,7 +1,7 @@
 //########################## Atualizado em 21/07/2023 ######################################################################
 //Versão do WhatsApp 2.2330.11
 
-var ListChats = new Array(), cont = 0, nome, numero, nTratado, nTratado2, sem55, event;
+var ListChats = new Array(), cont = 0, nome, numero, nTratado, nTratado2, sem55, event, data;
 
 function ExtrairListaContatos(){
 	
@@ -22,8 +22,7 @@ function ExtrairListaContatos(){
 				numero = Store.Contact._models[q].__x_id.user;
 				nome = removerAcentos(Store.Contact._models[q].__x_name);
 				window = Store.contact._models[q].__x_id.window
-				
-				Qt = numero.length;				
+				data = new Date(); data = data.getDate() + "." + (data.getMonth()+1) + "." + data.getFullYear();				Qt = numero.length;				
 				if (Qt == 13){
 					nTratado = numero.slice(2,13)
 					nTratado2 = numero.slice(0,9) + '-' + numero.slice(9,13);
@@ -34,7 +33,7 @@ function ExtrairListaContatos(){
 					sem55 = numero.slice(2,8) + '-' + numero.slice(8,12);
 				}
 				
-				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero + ';resultado' + window ; 					
+				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero + ';resultado' + window + ';Data' + data ; 					
 				cont++
 				
 				Nome = ''; numero = ''; nTratado = ''; nTratado2 = ''; sem55 = '';
