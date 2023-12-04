@@ -1,4 +1,4 @@
-//########################## Atualizado em 21/07/2023 ######################################################################
+//########################## Atualizado em 04/12/2023 ######################################################################
 //Versão do WhatsApp 2.2330.11
 
 var ListChats = new Array(), cont = 0, nome, numero, nTratado, nTratado2, sem55, Qt;
@@ -21,7 +21,7 @@ function ExtrairListaContatos(){
 				
 				numero = Store.Contact._models[q].__x_id.user;
 				nome = removerAcentos(Store.Contact._models[q].__x_name);
-				
+				data = new Date(); data= data.getDate() + "." + (data.getMonth()+1) + "." + data.getFullYear ();
 				Qt = numero.length;				
 				if (Qt == 13){
 					nTratado = numero.slice(2,13)
@@ -33,10 +33,10 @@ function ExtrairListaContatos(){
 					sem55 = numero.slice(2,8) + '-' + numero.slice(8,12);
 				}
 				
-				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero + ';' + nome + ';' + numero + ';' +  nTratado + ';'  + nTratado2 + ';' + sem55; 					
+				ListChats[cont] = 'Nome: ' + nome +';numero: ' + numero  + 'Data:' + data.getDate; 					
 				cont++
 				
-				Nome = ''; numero = ''; nTratado = ''; nTratado2 = ''; sem55 = '';
+				Nome = ''; numero = ''; 
 			}
 		}
 
@@ -44,7 +44,7 @@ function ExtrairListaContatos(){
 		console.log('Total de: ' + ListChats.length + ' Contatos')
 		
 		var data = new Date(); data = data.getDate() + "." + (data.getMonth()+1) + "." + data.getFullYear();
-		printTxt(ListChats, 'Lista de Contatos' + ' - ' +  data + '.csv')
+		printTxt(ListChats, 'Lista de Envio' + ' - ' +  data + '.csv')
 		ListChats = new Array();
 
 	}else{
