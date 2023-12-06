@@ -10,7 +10,7 @@
 // https://github.com/wppconnect-team/WPP4Delphi/blob/main/Source/JS/js.abr
 
 
-if (!window.Store) {
+ // if (!window.Store) {
 	(function () {
 		function getStore(modules) {
 			let foundCount = 0;
