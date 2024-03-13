@@ -1,6 +1,6 @@
 
-//########################## Cássio Machado ##########################################
-//########################## Atualizado em 21/02/2024 ######################################
+//########################## Suebersson Montalvão ##########################################
+//########################## Atualizado em 26/09/2023 ######################################
 //Versão do WhatsApp 2.2340.16
 
 // Referências:
@@ -10,7 +10,7 @@
 // https://github.com/wppconnect-team/WPP4Delphi/blob/main/Source/JS/js.abr
 
 
-  if (!window.Store) {
+if (!window.Store) {
 	(function () {
 		function getStore(modules) {
 			let foundCount = 0;
